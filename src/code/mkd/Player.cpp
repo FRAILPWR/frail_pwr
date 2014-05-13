@@ -182,7 +182,7 @@ mkString Player::getDbgClipName() const
 
 bool Player::isDead() const
 {
-    return m_health <= 0.f;
+    return false;//m_health <= 0.f;
 }
 
 bool Player::updateDbgAnim()
