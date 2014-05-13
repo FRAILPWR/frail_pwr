@@ -27,7 +27,7 @@
         "m_spawnOrigin" : { 0.0, 2.0, 22.0 },
         "m_spawnRadius" : 1.0,
         "m_aiNum" : 1,
-        "m_presetName" : "FRAILReference"
+        "m_presetName" : "BOSSA"
     },
 	
     "AISpawner" :
@@ -35,7 +35,7 @@
         "m_spawnOrigin" : { 0.0, 2.0, -22.0 },
         "m_spawnRadius" : 1.0,
         "m_aiNum" : 1,
-        "m_presetName" : "TournamentBoss"
+        "m_presetName" : "BOSSB"
     },
 //COORDINATOR	
 	"GameObject" :
