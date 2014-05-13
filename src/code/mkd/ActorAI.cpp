@@ -336,6 +336,7 @@ Character* ActorAI::findClosestEnemyInSight() const
     for (size_t i = 0; i < spotted_actors.size(); ++i)
     {
         Character* other_character = spotted_actors[i];
+        //other_character cast to ActorAI or Player or move hp to Character
         if (isEnemy(other_character) && !other_character->isDead()){
             currentActorDistance = (other_character->getSimPos() - getSimPos()).length();
             if(currentActorDistance < minActorDistance){
