@@ -1,6 +1,6 @@
 -- Script for healing bandage. Author: Sebastian Łasisz
 
-heal_value = 20
+heal_value = 50
 angle = 1
 
 function onTouched(touched_object)	
