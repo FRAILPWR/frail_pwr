@@ -69,7 +69,7 @@
 	"Preset":
 	{
 		"Name" : "healing_bandage",
-		"ScriptName" : "arena_a/healing_bandage.lua",
+		"ScriptName" : "tournament_arena/healing_bandage.lua",
 		"m_meshName" : "aidkit.mesh",
 		"m_radius" : "0.75"
 	},
@@ -92,7 +92,7 @@
 	"Preset":
 	{
 		"Name" : "double_damage",
-		"ScriptName" : "arena_a/double_damage.lua",
+		"ScriptName" : "tournament_arena/double_damage.lua",
 		"m_meshName" : "quad.mesh",
 		"m_radius" : "0.75"
 	},
