@@ -1263,7 +1263,8 @@ void Character::hitAngerMode()
 
             if (angle <= dmgAngle)
             {
-                SDamageInfo dmg_info(EDamageType::Punch, getMeleeDmg()*4.f, mydir, mo->getWorldPosition());
+                SDamageInfo dmg_info(EDamageType::Punch, getMeleeDmg(), mydir, mo->getWorldPosition());
+                //SDamageInfo dmg_info(EDamageType::Punch, getMeleeDmg()*4.f, mydir, mo->getWorldPosition());
                 mo->takeDamage(dmg_info);
             }
         }
