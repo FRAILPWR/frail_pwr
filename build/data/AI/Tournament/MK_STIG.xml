@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<aliases>
+	<!--<alias>floatExample 1000.0</alias>-->
+	<!--<alias>boolExample true</alias>-->
+	<alias>Atack_3_time 600</alias>
+	<alias>Atack_1_time 1200</alias>
+	<alias>MaxDDDistance 5.0</alias>
+</aliases>
+<node type="PrioritySelector" usefulness="1.0">
+	
+	<!-- GDY BISKO DD -->
+	<node type="Sequence" usefulness="100.0">
+		<node type="Condition">
+			<pre>Equal isDD True</pre>
+			<pre>LessEqual ddDistance MaxDDDistance</pre>
+			
+		</node>
+		<node type="Action" action="MK_STIG_GoForDD" usefulness="2.0" duration="100" interruptible="0" />
+	</node>
+	
+	
+	<!-- GDY ATAKOWANY -->
+	<node type="Sequence" usefulness="40.0">
+		
+		<node type="Condition">
+			<pre>Equal IsEnemyAttack True</pre>
+			<pre>Equal IsEnemyVisible False</pre>  
+		</node>
+		
+		<node type="Selector">	
+			<node type="Condition"> <pre>Equal isHealthOnCriticalLevel False</pre> 	</node>
+			<node type="Condition"> <pre>Equal isInPowerLake True</pre> 	</node>
+		</node>
+		
+		<node type="Action" action="MK_STIG_RevealAttacker" usefulness="2.0" duration="600" interruptible="0" />
+		<node type="Action" action="MK_STIG_Forward" usefulness="2.0" duration="5000" interruptible="1" > 
+			<pre>Equal IsEnemyAttack False</pre> 
+			<pre>Equal IsEnemyVisible False</pre>  
+		</node>
+	</node>
+	
+
+	<!-- GDY RANNY -->
+	<node type="Sequence" usefulness="30.0">
+		<node type="Condition">
+			<pre>Equal isWaitForAvaibleHealth True</pre> 
+		</node>
+		<node type="PrioritySelector">
+			
+			<node type="Action" action="MK_STIG_GoToHeal" usefulness="10.0" duration="250" interruptible="0"> <pre>Equal isInPowerLake False</pre> </node>
+			
+			<node type="Action" action="MK_STIG_Rotate" usefulness="9.0" duration="200" interruptible="0" > <pre>Equal isInMeleeHalfAngle False</pre> </node>
+			
+			<!-- ATAK WRĘCZ -->
+			<node type="Sequence" usefulness="8.0">
+				<node type="Condition"> <pre>Equal isInMeleeRange True</pre> </node>
+				<node type="Action" usefulness="3.0" action="MK_STIG_Atack" duration="600" interruptible="0" />
+			</node>
+			
+			<!-- ATAK DYSTANS -->
+			<node type="Sequence" usefulness="6.0">
+				<node type="Condition"> <pre>Equal isInFireRange True</pre> </node>
+				<node type="Action" action="MK_STIG_AttackFireball" duration="1200" interruptible="0" />
+			</node>
+			
+			<node type="Action" action="MK_STIG_Idle" duration="200" interruptible="0" usefulness="4.0" />
+			
+		</node>
+	</node>
+	
+
+			
+	<!-- GDY NIE WIDAC WROGÓW -->
+	<node type="Sequence" usefulness="20.0">
+		<node type="Selector">
+			<node type="Condition"> <pre>Equal IsEnemyVisible False</pre> </node>
+			<node type="Condition"> <pre>Equal isInFireRange False</pre> </node>
+		</node>
+		<node type="PrioritySelector">
+			
+			<node type="Sequence" usefulness="20.0">
+				<node type="Condition"> <pre>Equal isHealthOnAvailableLevel False</pre> </node>
+				<node type="Selector">	
+					<node type="Action" action="MK_STIG_GoToHeal" duration="250" interruptible="0"> <pre>Equal isInPowerLake False</pre>  </node>
+					<node type="Action" action="MK_STIG_Idle" duration="500" interruptible="1"> 
+						<pre>Equal isInPowerLake True</pre> 
+						<pre>Equal IsEnemyVisible False</pre>  
+					</node>					
+				</node>
+			</node>
+			
+			<node type="Sequence" usefulness="10.0">
+				<node type="Condition"> <pre>Equal isEnemyLastSpoot True</pre> </node>
+				<node type="Action" usefulness="5.0" action="MK_STIG_GoToLastEnemySpot" duration="250" interruptible="1"> </node>
+			</node>
+			
+			<node type="Action" usefulness="5.0" action="MK_STIG_Patrol" duration="2500" interruptible="1"> 
+				<pre>Equal IsEnemyVisible False</pre> 
+				<pre>Equal IsEnemyAttack False</pre>  
+			</node>
+			
+		</node>
+	</node>
+	
+	<!-- GDY WIDOCZNY WRÓG -->
+	<node type="Sequence" usefulness="10.0">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+		</node>
+		<node type="PrioritySelector">
+			
+			
+			<!-- ATAK W BECZKE -->
+			<node type="Sequence" usefulness="100.0">
+				<node type="Condition">
+					<pre>Equal czyBeczkaWZasieguWroga True</pre>
+					<pre>Equal czyJestemWZasieguJakiejkolwiekBeczki False</pre>
+				</node>
+				<node type="Action" action="MK_STIG_HitBarrel" duration="1200" interruptible="1" > 
+					<pre>Equal czyBeczkaWZasieguWroga True</pre>
+					<pre>Equal IsEnemyVisible True</pre>
+					<pre>Equal czyJestemWZasieguJakiejkolwiekBeczki False</pre>
+				</node>
+			</node>
+			
+			<!-- ATAK WRĘCZ -->
+			<node type="Sequence" usefulness="8.0">
+				<node type="Condition"> <pre>Equal isInMeleeRange True</pre> </node>
+				<node type="PrioritySelector">
+					<node type="Action" usefulness="4.0" action="MK_STIG_Rotate" duration="200" interruptible="0" > <pre>Equal isInMeleeHalfAngle False</pre> </node>
+					<node type="Action" usefulness="3.0" action="MK_STIG_Atack" duration="600" interruptible="0" />
+				</node>
+			</node>
+			
+			<!-- ATAK DYSTANS -->
+			<node type="Sequence" usefulness="2.0">
+				<node type="Condition">
+					<pre>Equal isInFireRange True</pre>
+					<pre>Equal czyMogeBezpircznieRzucac True</pre>
+				</node>
+				<node type="Action" usefulness="3.0" action="MK_STIG_ReduceDistance" duration="250" interruptible="0"> </node>
+				<node type="Action" action="MK_STIG_AttackFireball" duration="1200" interruptible="1" > 
+					<pre>Equal isInFireRange True</pre>
+					<pre>Equal IsEnemyVisible True</pre>
+					<pre>Equal czyMogeBezpircznieRzucac True</pre>
+				</node>
+			</node>
+			
+			<node type="PrioritySelector" usefulness="1.0">
+				<node type="Action" usefulness="3.0" action="MK_STIG_ReduceDistance" duration="250" interruptible="1"> </node>
+			</node>
+
+		</node>
+	</node>
+	
+	
+	<!--<node type="Action" action="AttackMelee" duration="50" interruptible="0" />-->
+	
+</node>

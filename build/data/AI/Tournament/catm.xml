@@ -1,0 +1,368 @@
+<?xml version="1.0"?>
+<aliases>
+	<alias>MinAIDistanceFromBarrels 15.0</alias>
+	<alias>MaxEnemyDistanceFromBarrelsToDestroyBarrels 20.0</alias>
+	<alias>MaxEnemyDistanceFromFarthestBarrelToDestroyBarrels 30.0</alias>
+	<alias>MinDistanceFromMedkit 10.0</alias>
+	<alias>MaxTimeSinceLastAttackToLookForEnemy 1000.0</alias>
+	<alias>MaxTimeSinceLastAttackToTakeBuff 2000.0</alias>
+	<alias>DistanceFromBuffToForceTake 15.0</alias>
+	<alias>MaxDistanceFromEnemyToTakeBuff 15.0</alias>
+	<alias>MaxDistanceFromEnemyToReduceDistanceAIBuffed 10.0</alias>
+	<alias>MinTimeSinceLastAttackToReduceDistanceAIBuffed 3000.0</alias>
+	<alias>MaxDistanceFromPowerLakeToForceGoToPowerLake 15.0</alias>
+	<alias>MaxTimeSinceLastAttackToForceGoToPowerLake 3000.0</alias>
+</aliases>
+<methods>
+	<method name="mthKillEnemy" usefulness="1.0" runAll="0">
+		<goals>
+			<goal>glKillEnemy</goal>
+		</goals>
+		<!--No preconditions since it is our root task-->
+		<subtasks>
+			<sub>glPatrol</sub>
+			<sub>glAttack</sub>
+		</subtasks>
+	</method>
+	<method name="mthPatrol" usefulness="1.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsEnemySeen False</pre>
+			<pre>Equal IsGoingToPowerLake False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opPatrol</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeMedkit" usefulness="8.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsMedkitAvailable True</pre>
+			<pre>LessEqual MedkitDistance MinDistanceFromMedkit</pre>
+			<pre>Less ActorHealth ActorMaxHealth</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeMedkit</sub>
+		</subtasks>
+	</method>
+	<method name="mthGoToEnemyLastSpot" usefulness="7.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsEnemySeen True</pre>
+			<pre>Equal IsStayingInPowerLake False</pre>
+			<pre>Equal IsGoingToPowerLake False</pre>
+			<pre>Equal IsBuffAvailable False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opGoToEnemyLastSpot</sub>
+		</subtasks>
+	</method>
+	<method name="mthGoToLastEnemySpotSecond" usefulness="7.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsEnemySeen True</pre>
+			<pre>Equal IsStayingInPowerLake False</pre>
+			<pre>Equal IsGoingToPowerLake False</pre>
+			<pre>Equal IsAIBuffed True</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opGoToEnemyLastSpot</sub>
+		</subtasks>
+	</method>
+	<method name="mthGoToPowerLake" usefulness="4.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>LessEqual ActorHealth HealthAMLimit</pre>
+			<pre>Equal IsPowerLakeReached False</pre>
+			<pre>MoreEqual EnemyDistance nearRngFbMax</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opGoToPowerLake</sub>
+		</subtasks>
+	</method>
+	<method name="mthGoToPowerLakeSecond" usefulness="4.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>LessEqual ActorHealth HealthAMLimit</pre>
+			<pre>Equal IsPowerLakeReached False</pre>
+			<pre>LessEqual AIDistanceFromPowerLake MaxDistanceFromPowerLakeToForceGoToPowerLake</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opGoToPowerLake</sub>
+		</subtasks>
+	</method>
+	<method name="mthGoToPowerLakeThird" usefulness="4.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>LessEqual ActorHealth HealthAMLimit</pre>
+			<pre>Equal IsPowerLakeReached False</pre>
+			<pre>MoreEqual TimeSinceLastAttack MaxTimeSinceLastAttackToForceGoToPowerLake</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opGoToPowerLake</sub>
+		</subtasks>
+	</method>
+	<method name="mthStayInPowerLake" usefulness="5.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Less ActorHealth ActorMaxHealth</pre>
+			<pre>Equal IsPowerLakeReached True</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opStayInPowerLake</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuff" usefulness="2.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>More TimeSinceLastAttack MaxTimeSinceLastAttackToTakeBuff</pre>
+			<pre>LessEqual AIDistanceFromBuff EnemyDistanceFromBuff</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuffSecond" usefulness="2.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>More TimeSinceLastAttack MaxTimeSinceLastAttackToTakeBuff</pre>
+			<pre>Equal IsEnemyGoingToBuff False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuffAINearBuff" usefulness="8.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>LessEqual AIDistanceFromBuff DistanceFromBuffToForceTake</pre>
+			<pre>More TimeSinceLastAttack MaxTimeSinceLastAttackToTakeBuff</pre>
+			<pre>LessEqual AIDistanceFromBuff EnemyDistanceFromBuff</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuffAINearBuffSecond" usefulness="8.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>LessEqual AIDistanceFromBuff DistanceFromBuffToForceTake</pre>
+			<pre>More TimeSinceLastAttack MaxTimeSinceLastAttackToTakeBuff</pre>
+			<pre>Equal IsEnemyGoingToBuff False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuffAINearBuffThird" usefulness="8.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>LessEqual AIDistanceFromBuff DistanceFromBuffToForceTake</pre>
+			<pre>Less EnemyDistance MaxDistanceFromEnemyToTakeBuff</pre>
+			<pre>LessEqual AIDistanceFromBuff EnemyDistanceFromBuff</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthTakeBuffAINearBuffFourth" usefulness="8.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsBuffAvailable True</pre>
+			<pre>Equal IsAIBuffed False</pre>
+			<pre>LessEqual AIDistanceFromBuff DistanceFromBuffToForceTake</pre>
+			<pre>Less EnemyDistance MaxDistanceFromEnemyToTakeBuff</pre>
+			<pre>Equal IsEnemyGoingToBuff False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opTakeBuff</sub>
+		</subtasks>
+	</method>
+	<method name="mthFindAttacker" usefulness="6.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>LessEqual TimeSinceLastAttack MaxTimeSinceLastAttackToLookForEnemy</pre>
+			<pre>Equal IsGoingToPowerLake False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opFindAttacker</sub>
+		</subtasks>
+	</method>
+	<method name="mthReduceDistanceAIBuffed" usefulness="2.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>More EnemyDistance rngMelee</pre>
+			<pre>LessEqual EnemyDistance MaxDistanceFromEnemyToReduceDistanceAIBuffed</pre>
+			<pre>Equal IsAIBuffed True</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opReduceDistance</sub>
+		</subtasks>
+	</method>
+	<method name="mthReduceDistanceAIBuffedNotAttacked" usefulness="2.0">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>More EnemyDistance rngMelee</pre>
+			<pre>MoreEqual TimeSinceLastAttack MinTimeSinceLastAttackToReduceDistanceAIBuffed</pre>
+			<pre>Equal IsAIBuffed True</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opReduceDistance</sub>
+		</subtasks>
+	</method>
+	<method name="mthReduceDistanceEnemyInPowerLake" usefulness="2.25">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>Equal IsEnemyInPowerLake True</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opReduceDistanceLong</sub>
+		</subtasks>
+	</method>
+	<method name="mthReduceDistance" usefulness="1.5">
+		<goals>
+			<goal>glPatrol</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>More EnemyDistance nearRngFbMax</pre>
+			<pre>Equal IsGoingToPowerLake False</pre>
+			<pre>Equal IsStayingInPowerLake False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opReduceDistance</sub>
+		</subtasks>
+	</method>
+	<method name="mthAttackFireball" usefulness="2.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>LessEqual EnemyDistance rngFbMax</pre>
+			<pre>Equal IsEnemyGoingToBuff False</pre>
+		</preconditions>
+		<subtasks>
+			<sub>animAttackFireball</sub>
+			<sub>opAttackFireball</sub>
+		</subtasks>
+	</method>
+	<method name="mthAttackFireballSecond" usefulness="2.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>LessEqual EnemyDistance rngFbMax</pre>
+			<pre>More AIDistanceFromBuff EnemyDistanceFromBuff</pre>
+		</preconditions>
+		<subtasks>
+			<sub>animAttackFireball</sub>
+			<sub>opAttackFireball</sub>
+		</subtasks>
+	</method>
+	<method name="mthAttackMelee" usefulness="3.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>LessEqual EnemyDistance rngMelee</pre>
+			<pre>LessEqual EnemyDgrDiff dmgConeSize</pre>
+		</preconditions>
+		<subtasks>
+			<sub>animAttackMelee</sub>
+			<sub>opAttackMelee</sub>
+		</subtasks>
+	</method>
+	<method name="mthRotate" usefulness="3.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>LessEqual EnemyDistance rngMelee</pre>
+			<pre>More EnemyDgrDiff dmgConeSize</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opRotateToEnemy</sub>
+		</subtasks>
+	</method>
+	<method name="mthDestroyBarrels" usefulness="4.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<preconditions>
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>LessEqual EnemyDistanceFromBarrels MaxEnemyDistanceFromBarrelsToDestroyBarrels</pre>
+			<pre>LessEqual MaxEnemyDistance MaxEnemyDistanceFromFarthestBarrelToDestroyBarrels</pre>
+			<pre>MoreEqual AIDistanceFromBarrels MinAIDistanceFromBarrels</pre>
+			<pre>Less AIDistanceFromBarrels nearRngFbMax</pre>
+			<pre>LessEqual EnemyDistanceFromBarrels AIDistanceFromBarrels</pre>
+		</preconditions>
+		<subtasks>
+			<sub>opDestroyBarrels</sub>
+		</subtasks>
+	</method>
+	<method name="mthRest" usefulness="1.0">
+		<goals>
+			<goal>glAttack</goal>
+		</goals>
+		<subtasks>
+			<sub>opRest</sub>
+		</subtasks>
+	</method>
+</methods>

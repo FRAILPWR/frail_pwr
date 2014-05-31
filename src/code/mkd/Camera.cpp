@@ -6,6 +6,73 @@
 #include "Camera.h"
 #include "contrib/DebugDrawer.h"
 
+PointCamera::PointCamera(Ogre::Camera* cam, ICameraTarget* target)
+    : m_cam(cam)
+    , m_pos(0, 0, 0)
+    , m_yaw(0)
+    , m_roll(0)
+    , m_forwardUnit(0, 0, -1)
+    , m_upUnit(0, 1, 0)
+    , m_target(target)
+    , m_lookAt(0, 0, 0)
+{
+
+}
+
+void PointCamera::update( float dt, float mouse_dx, float mouse_dy )
+{
+    if (m_target)
+        m_pos = m_target->CameraTarget_getWorldPosition();
+
+    m_forward =  m_lookAt-m_pos;
+    m_forward.normalise();
+
+    m_cam->setPosition(m_pos);
+    m_cam->lookAt(m_lookAt);
+
+    static float fovy = 70.f;
+    m_cam->setFOVy(Ogre::Degree(fovy));
+
+    m_lastPos = m_pos;
+}
+
+void PointCamera::setLookAt(mkVec3 lookAt){
+    m_lookAt = lookAt;
+}
+
+void PointCamera::move( const mkVec3& translation )
+{
+    m_pos += translation;
+}
+
+const mkVec3 PointCamera::getForwardVec() const
+{
+    return m_forward;
+}
+
+const mkVec3 PointCamera::getRightVec() const
+{
+    return m_forward.crossProduct(m_upUnit);
+}
+
+const mkVec3 PointCamera::getPosition() const
+{
+    return m_pos;
+}
+
+void PointCamera::setTarget( ICameraTarget* target )
+{
+    m_target = target;
+
+    if (m_target)
+        m_pos = m_target->CameraTarget_getWorldPosition();
+}
+
+const mkVec3 PointCamera::getLookatPos() const
+{
+    return m_lookAt;
+}
+
 CameraFPP::CameraFPP(Ogre::Camera* cam, ICameraTarget* target)
     : m_cam(cam)
     , m_pos(0, 0, 0)
@@ -168,4 +235,14 @@ const mkVec3 CameraTPP::getPosition() const
 const mkVec3 CameraTPP::getLookatPos() const
 {
     return m_lookat;
+}
+
+PointCameraTarget::PointCameraTarget(mkVec3 position) : m_point(position)
+{
+
+}
+
+mkVec3 PointCameraTarget::CameraTarget_getWorldPosition() const
+{
+    return m_point;
 }

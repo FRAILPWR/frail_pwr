@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<tasks>
+	<task name="opPatrol" duration="1000" interruptible="1">
+		<outcome>
+			<out>IsEnemyVisible True</out>
+		</outcome>
+		<interruptions>
+			<int>opGoToPowerLake</int>
+			<int>opReduceDistance</int>
+		</interruptions>
+	</task>
+	<task name="opGoToEnemyLastSpot" duration="500" interruptible="1">
+		<outcome>
+			<out>IsEnemyVisible True</out>
+		</outcome>
+		<interruptions>
+			<int>opGoToPowerLake</int>
+			<int>opStayInPowerLake</int>
+			<int>opTakeBuff</int>
+		</interruptions>
+	</task>
+	<task name="opAttackMelee" duration="500" interruptible="0">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+	</task>
+	<task name="opAttackFireball" duration="50" interruptible="0">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+	</task>
+	<task name="opDestroyBarrels" duration="1200" interruptible="0">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+	</task>
+	<task name="opGoToPowerLake" duration="1000" interruptible="0">
+		<outcome>
+			<out>IsStayingInPowerLake True</out>
+		</outcome>
+	</task>
+	<task name="opStayInPowerLake" duration="500" interruptible="1">
+		<interruptions>
+			<int>opFindAttacker</int>
+			<int>opAttackMelee</int>
+			<int>opAttackFireball</int>
+			<int>animAttackMelee</int>
+			<int>animAttackFireball</int>
+		</interruptions>
+	</task>
+	<task name="opReduceDistance" duration="200" interruptible="1">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+		<interruptions>
+			<int>opGoToPowerLake</int>
+			<int>opStayInPowerLake</int>
+		</interruptions>
+	</task>
+	<task name="opReduceDistanceLong" duration="1000" interruptible="1">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+		<interruptions>
+			<int>opGoToPowerLake</int>
+			<int>opStayInPowerLake</int>
+		</interruptions>
+	</task>
+	<task name="opTakeBuff" duration="500" interruptible="1">
+		<outcome>
+			<out>IsEnemyDead True</out>
+		</outcome>
+		<interruptions>
+			<int>opStayInPowerLake</int>
+			<int>opGoToPowerLake</int>
+			<int>opAttackMelee</int>
+			<int>animAttackMelee</int>
+			<int>opAttackFireball</int>
+			<int>animAttackFireball</int>
+		</interruptions>
+	</task>
+	<task name="opTakeMedkit" duration="500" interruptible="1">
+		<outcome>
+			<out>IsMedkitAvailable False</out>
+		</outcome>
+		<interruptions>
+			<int>opAttackMelee</int>
+			<int>opAttackFireball</int>
+			<int>animAttackMelee</int>
+			<int>animAttackFireball</int>
+		</interruptions>
+	</task>
+	<task name="opRotateToEnemy" duration="1000" interruptible="1">
+		<outcome>
+			<out>IsEnemyVisible True</out>
+			<out>IsEnemyDead True</out>
+		</outcome>
+		<interruptions>
+			<int>opAttackMelee</int>
+			<int>animAttackMelee</int>
+			<int>opAttackFireball</int>
+			<int>animAttackFireball</int>
+		</interruptions>
+	</task>
+	<task name="opFindAttacker" duration="500" interruptible="1">
+		<outcome>
+			<out>IsEnemyVisible True</out>
+			<out>IsEnemyDead True</out>
+		</outcome>
+		<interruptions>
+			<int>opAttackMelee</int>
+			<int>opAttackFireball</int>
+			<int>animAttackMelee</int>
+			<int>animAttackFireball</int>
+			<int>opGoToPowerLake</int>
+			<int>opGoToEnemyLastSpot</int>
+		</interruptions>
+	</task>
+	<task name="opRest" duration="1" interruptible="0">
+		<outcome>
+			<out>IsEnemyVisible True</out>
+			<out>IsEnemyDead True</out>
+		</outcome>
+	</task>
+	<task name="animAttackFireball" duration="550" interruptible="0"/>
+	<task name="animAttackMelee" duration="1150" interruptible="1">
+		<interruptions>
+			<int>opRotateToEnemy</int>
+		</interruptions>
+	</task>
+</tasks>

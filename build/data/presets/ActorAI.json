@@ -349,11 +349,11 @@
 		"Extends" : "BOSSCommon",
         "m_conflictSide" : "RedTeam",
         "m_overrideMaterialName" : "NinjaRed"
-		"m_characterCtrlName" : "HTN",
-		"m_btTreePath": "data\\AI\\BT\\melee.xml",
-		"m_htnMethodsPath": "data\\AI\\HTN\\melee\\methods.xml",
-		"m_htnOperatorsPath": "data\\AI\\HTN\\melee\\operators.xml",
-		"m_htnGoalsPath": "data\\AI\\HTN\\goals.xml",
+		"m_characterCtrlName" : "MW_Xardas",
+		"m_btTreePath": "data\\AI\\Tournament\\xardas.xml",
+		"m_htnMethodsPath": "data\\AI\\Tournament\\catm.xml",
+		"m_htnOperatorsPath": "data\\AI\\Tournament\\cato.xml",
+		"m_htnGoalsPath": "data\\AI\\Tournament\\catg.xml",
     },
 	
 	// BOSS B
@@ -364,10 +364,10 @@
 		"Extends" : "BOSSCommon",
         "m_conflictSide" : "BlueTeam",
         "m_overrideMaterialName" : "NinjaBlue"
-		"m_characterCtrlName" : "SampleBT",
-		"m_btTreePath": "data\\AI\\SampleBT\\tree.xml",
-		"m_htnMethodsPath": "data\\AI\\SampleHTN\\methods.xml",
-		"m_htnOperatorsPath": "data\\AI\\SampleHTN\\operators.xml",
-		"m_htnGoalsPath": "data\\AI\\SampleHTN\\goals.xml",
+		"m_characterCtrlName" : "SiroBT",
+		"m_btTreePath": "data\\AI\\Tournament\\SiroBTTree.xml",
+		"m_htnMethodsPath": "data\\AI\\Tournament\\catm.xml",
+		"m_htnOperatorsPath": "data\\AI\\Tournament\\cato.xml",
+		"m_htnGoalsPath": "data\\AI\\Tournament\\catg.xml",
     },
 }

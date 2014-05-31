@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<node type="Selector">
+	<node type="PrioritySelector" usefulness="4.0">		
+		<node type="Action" action="DZIKI_RevealAttacker" usefulness="2.0" duration="2000" interruptible="1">
+			<pre>Equal IsEnemyAttack True</pre>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsHealing False</pre>
+		</node>
+		<node type="Action" action="DZIKI_Patrol" usefulness="1.0" duration="4000" interruptible="1">
+			<pre>Equal IsEnemyAttack False</pre>
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsHealing False</pre>
+		</node>
+	</node>
+	
+	<node type="Sequence" usefulness="3.0">
+		<node type="Condition">
+			<pre>Less CurrentHealth HealthLimit</pre>
+		</node>
+	
+		<node type="PrioritySelector">
+			<node type="Action" action="DZIKI_Medkit" duration="1200" usefulness="2.0" interruptible="1">
+				<pre>Equal MedkitAvailable True</pre>
+			</node>
+			
+			<node type="Action" action="DZIKI_Lake" duration="1200" usefulness="1.0" interruptible="1">
+				<pre>Equal MedkitAvailable False</pre>
+			</node>
+		</node>
+	</node>
+	
+	<node type="Sequence" usefulness="2.0">
+		<node type="Condition">
+			<pre>Equal IsHealing True</pre>
+		</node>
+	
+		<node type="PrioritySelector">
+			<node type="Action" action="DZIKI_Medkit" duration="1200" usefulness="4.0" interruptible="1">
+				<pre>Equal MedkitAvailable True</pre>
+			</node>
+				
+			<node type="Action" action="DZIKI_Shoot" duration="800" usefulness="3.0" interruptible="0">
+				<pre>Equal InLake True</pre>
+				<pre>Equal IsEnemyVisible True</pre>
+				<pre>LessEqual EnemyDistance ShootingRange</pre>
+			</node>
+			
+			<node type="Action" action="DZIKI_Rotate" duration="2000" usefulness="2.0" interruptible="0">
+				<pre>Equal InLake True</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+			</node>
+			
+			<node type="Action" action="DZIKI_Lake" duration="1200" usefulness="1.0" interruptible="1">
+				<pre>Equal MedkitAvailable False</pre>
+			</node>
+			
+		</node>
+	</node>
+	
+	<node type="Sequence"  usefulness="1.0">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>Equal IsHealing False</pre>
+		</node>
+		
+		<node type="PrioritySelector">
+			<node type="Action" action="DZIKI_Chase" usefulness="3.0" duration="50" interruptible="0">
+				<pre>More EnemyDistance ShootingRange</pre>
+			</node>
+			
+			<node type="Sequence" usefulness="2.0">
+				<node type="Condition">
+					<pre>LessEqual EnemyDistance MeleeRange</pre>
+				</node>
+				
+				<node type="Action" action="DZIKI_AnimAttackMelee" duration="650" interruptible="0" />
+				<node type="Action" action="DZIKI_Melee" duration="50" usefulness="2.0" interruptible="0" />
+			</node>
+			
+			<node type="Sequence"  usefulness="1.0">
+				<node type="Condition">
+					<pre>LessEqual EnemyDistance ShootingRange</pre>
+				</node>
+				
+				<node type="Action" action="DZIKI_AnimAttackPunch" duration="550" interruptible="0" />
+				<node type="Action" action="DZIKI_Shoot" duration="50" interruptible="0" />
+				<node type="Action" action="DZIKI_Strafe" duration="1200" interruptible="0" />
+			</node>
+			
+		</node>
+	</node>
+</node>

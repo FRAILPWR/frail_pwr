@@ -43,9 +43,9 @@ bool Level::load( const mkString& desc_file_name)
 
 void Level::updateRendering( float dt )
 {
-    char buff[512] = {0};
-    sprintf(buff, "Find queries: %d", m_currFrameFindObjectsByIdQueriesNum);
-    Ogre::OverlayManager::getSingleton().getOverlayElement("Game/GunOrientation")->setCaption(buff);
+    //char buff[512] = {0};
+    //sprintf(buff, "Find queries: %d", m_currFrameFindObjectsByIdQueriesNum);
+    //Ogre::OverlayManager::getSingleton().getOverlayElement("Game/GunOrientation")->setCaption(buff);
 
     m_objectsMgr.callFrameEventHandlers(EFrameEvent::Render);
 }
@@ -275,7 +275,7 @@ void Level::setLocalPlayer( Player* player )
 {
     m_localPlayer = player;
 
-    g_game->getCamera()->setTarget(m_localPlayer);
+    //g_game->getCamera()->setTarget(m_localPlayer);
 }
 
 GameObject* Level::findObjectByName( const mkString& name, const rtti::TypeInfo* exact_class /*= NULL*/ ) const

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<node type="Selector" usefulness="1.0">
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>LessEqual ActorHealth HealthAMLimit</pre>
+    </node>
+    <node type="Action" action="SM_SzatanskaMiotla_RecoveryState" usefulness="1.0" duration="2000" interruptible="1">
+      <int>More ActorHealth HealthAMLimit</int>
+    </node>
+    <node type="Action" action="Rotate" duration="200" interruptible="0" />
+    <node type="Action" action="AnimAttackPunch" duration="550" interruptible="0" />
+    <node type="Action" action="AttackFireball" duration="50" interruptible="0" />
+  </node>
+
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>Equal IsEnemyVisible True</pre>
+      <pre>LessEqual EnemyDistance rngMelee</pre>
+    </node>
+    <node type="Action" action="Rotate" duration="200" interruptible="0" />
+    <node type="Action" action="AnimAttackMelee" duration="1150" interruptible="0" />
+    <node type="Action" action="AttackMelee" duration="50" interruptible="0" />
+  </node>
+
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>Equal IsEnemyVisible True</pre>
+      <pre>More EnemyDistance rngMelee</pre>
+    </node>
+    <node type="Action" action="ReduceDistance" duration="500" interruptible="0" />
+    <node type="Action" action="AnimAttackPunch" duration="550" interruptible="0" />
+    <node type="Action" action="AttackFireball" duration="50" interruptible="0" />
+  </node>
+
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>Equal IsEnemySeen True</pre>
+    </node>
+    <node type="Action" action="ExploreSpot" duration="1500" interruptible="1">
+      <int>Equal IsEnemyVisible True</int>
+    </node>
+  </node>
+
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>Equal IsEnemyVisible False</pre>
+    </node>
+    <node type="Action" action="SM_SzatanskaMiotla_Patrol" usefulness="1.0" duration="1500" interruptible="1">
+      <int>Equal IsEnemyVisible True</int>
+    </node>
+    <node type="Action" action="Rotate" duration="200" interruptible="0" />
+  </node>
+
+</node>

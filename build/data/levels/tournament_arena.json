@@ -6,7 +6,7 @@
     
     "PlayerSpawner" :
     {
-        "m_worldSpawnPos" : { 12.0, 10.0, -1.0 }
+        "m_worldSpawnPos" : { 0.0, 10.0, -40.0 }
     },
     
     "DynamicLight" :

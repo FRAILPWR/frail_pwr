@@ -185,6 +185,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlueBTActorController.cpp" />
     <ClCompile Include="BossFSMActorController.cpp" />
     <ClCompile Include="BTActorController.cpp" />
     <ClCompile Include="BT\Actions.cpp" />
@@ -202,6 +203,8 @@
     <ClCompile Include="Experiment1HTNActorController.cpp" />
     <ClCompile Include="Experiment3BTActorController.cpp" />
     <ClCompile Include="Experiment3HTNActorController.cpp" />
+    <ClCompile Include="GorskiBTActorController.cpp" />
+    <ClCompile Include="HanActorController.cpp" />
     <ClCompile Include="HTNActorController.cpp" />
     <ClCompile Include="htn\Goal.cpp" />
     <ClCompile Include="htn\Method.cpp" />
@@ -209,6 +212,10 @@
     <ClCompile Include="htn\Parser.cpp" />
     <ClCompile Include="htn\Planner.cpp" />
     <ClCompile Include="htn\Task.cpp" />
+    <ClCompile Include="MK_STIG_ActorController.cpp" />
+    <ClCompile Include="MW_Xardas_MatBTActorController.cpp" />
+    <ClCompile Include="MyBestHTNActorController.cpp" />
+    <ClCompile Include="MyBTActorController.cpp" />
     <ClCompile Include="PhysicsDebugDraw.cpp" />
     <ClCompile Include="Filesystem.cpp" />
     <ClCompile Include="LevelObjectsMgr.cpp" />
@@ -221,6 +228,9 @@
     <ClCompile Include="SampleBTActorController.cpp" />
     <ClCompile Include="SampleFSMActorController.cpp" />
     <ClCompile Include="SampleHTNActorController.cpp" />
+    <ClCompile Include="SerpentFSMActorController.cpp" />
+    <ClCompile Include="SiroBTActorController.cpp" />
+    <ClCompile Include="SM_SzatanskaMiotla_BTActorController.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="rtti\FieldInfo.cpp" />
     <ClCompile Include="rtti\PresetMgr.cpp" />
@@ -270,6 +280,7 @@
     <ClCompile Include="ctf\TeamFlag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlueBTActorController.h" />
     <ClInclude Include="BossFSMActorController.h" />
     <ClInclude Include="BTActorController.h" />
     <ClInclude Include="BT\Actions.h" />
@@ -287,6 +298,8 @@
     <ClInclude Include="Experiment3HTNActorController.h" />
     <ClInclude Include="Filesystem.h" />
     <ClInclude Include="FixedString.h" />
+    <ClInclude Include="GorskiBTActorController.h" />
+    <ClInclude Include="HanActorController.h" />
     <ClInclude Include="HTNActorController.h" />
     <ClInclude Include="htn\Goal.h" />
     <ClInclude Include="htn\Method.h" />
@@ -295,7 +308,12 @@
     <ClInclude Include="htn\Planner.h" />
     <ClInclude Include="htn\Task.h" />
     <ClInclude Include="LevelObjectsMgr.h" />
+    <ClInclude Include="MatUtils.h" />
     <ClInclude Include="mkAssert.h" />
+    <ClInclude Include="MK_STIG_ActorController.h" />
+    <ClInclude Include="MW_Xardas_MatBTActorController.h" />
+    <ClInclude Include="MyBestHTNActorController.h" />
+    <ClInclude Include="MyBTActorController.h" />
     <ClInclude Include="ObjectRef.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicsObjectUserData.h" />
@@ -303,7 +321,10 @@
     <ClInclude Include="SampleBTActorController.h" />
     <ClInclude Include="SampleFSMActorController.h" />
     <ClInclude Include="SampleHTNActorController.h" />
+    <ClInclude Include="SerpentFSMActorController.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="SiroBTActorController.h" />
+    <ClInclude Include="SM_SzatanskaMiotla_BTActorController.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="rtti\FieldInfo.h" />

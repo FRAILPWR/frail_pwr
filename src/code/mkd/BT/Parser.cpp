@@ -260,7 +260,163 @@ namespace BT {
                 result = new BT::EXPERIMENTS::GotoMine(m_AI);
             } else if(std::strcmp(xmlNode.attribute("action").value(),"Idle") == 0){
                 result = new BT::EXPERIMENTS::Idle(m_AI);
-            } else {
+                //////////////////////////////////////////////////////////////////////////
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_Idle") == 0){
+                result = new BT::AK_BEST::AK_BEST_Idle(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_FollowEnemysLastPos") == 0){
+                result = new BT::AK_BEST::AK_BEST_FollowEnemysLastPos(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_InEnemysAttackDir") == 0){
+                result = new BT::AK_BEST::AK_BEST_InEnemysAttackDir(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_MeleeAttack") == 0){
+                result = new BT::AK_BEST::AK_BEST_MeleeAttack(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_Turn") == 0){
+                result = new BT::AK_BEST::AK_BEST_Turn(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_FireballAttack") == 0){
+                result = new BT::AK_BEST::AK_BEST_FireballAttack(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_FollowEnemy") == 0){
+                result = new BT::AK_BEST::AK_BEST_FollowEnemy(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"AK_BEST_GoInPowerLakeDir") == 0){
+                result = new BT::AK_BEST::AK_BEST_GoInPowerLakeDir(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_RevealAttacker") == 0){
+                result = new BT::BLUE::RevealAttacker(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Patrol") == 0){
+                result = new BT::BLUE::Patrol(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Medkit") == 0){
+                result = new BT::BLUE::Medkit(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Lake") == 0){
+                result = new BT::BLUE::Lake(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Shoot") == 0){
+                result = new BT::BLUE::Shoot(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Rotate") == 0){
+                result = new BT::BLUE::Rotate(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Chase") == 0){
+                result = new BT::BLUE::Chase(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_AnimAttackMelee") == 0){
+                result = new BT::BLUE::AnimAttackMelee(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Melee") == 0){
+                result = new BT::BLUE::Melee(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_AnimAttackPunch") == 0){
+                result = new BT::BLUE::AnimAttackPunch(m_AI);
+            }
+            else if(std::strcmp(xmlNode.attribute("action").value(),"DZIKI_Strafe") == 0){
+                result = new BT::BLUE::Strafe(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if (std::strcmp(xmlNode.attribute("action").value(), "GG_GorskiBT_DestroyBarrels") == 0)
+            {
+                result = new BT::GG_GorskiBT::DestroyBarrels(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "GG_GorskiBT_PickupBuff") == 0)
+            {
+                result = new BT::GG_GorskiBT::PickupBuff(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "GG_GorskiBT_Heal") == 0)
+            {
+                result = new BT::GG_GorskiBT::Heal(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_GoToHealingField") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_GoToHealingField(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_AnimAttackMelee") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_AnimAttackMelee(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_AttackFireball") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_AttackFireball(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_AttackMelee") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_AttackMelee(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_Rotate") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_Rotate(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_LookForEnemy") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_LookForEnemy(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_ShootBarrel") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_ShootBarrel(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_AnimAttackRange") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_AnimAttackRange(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_FindEnemy") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_FindEnemy(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MC_SIRO_WaitForEnemy") == 0){
+                result = new BT::MC_SIRO::MC_SIRO_WaitForEnemy(m_AI);
+                //////////////////////////////////////////////////////////////////////////
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_Atack") == 0){
+                result = new BT::MK_STIG::AttackMelee(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_ReduceDistanceAndRangeAtack") == 0){
+                result = new BT::MK_STIG::ReduceDistanceAndRangeAtack(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_GoToHeal") == 0){
+                result = new BT::MK_STIG::GoToHeal(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_Forward") == 0){
+                result = new BT::MK_STIG::Forward(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_AttackFireball") == 0){
+                result = new BT::MK_STIG::AttackFireball(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_Rotate") == 0){
+                result = new BT::MK_STIG::Rotate(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_RevealAttacker") == 0){
+                result = new BT::MK_STIG::RevealAttacker(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_ReduceDistance") == 0){
+                result = new BT::MK_STIG::ReduceDistance(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_Idle") == 0){
+                result = new BT::MK_STIG::Idle(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_Patrol") == 0){
+                result = new BT::MK_STIG::Patrol(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_GoToLastEnemySpot") == 0){
+                result = new BT::MK_STIG::GoToLastEnemySpot(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_HitBarrel") == 0){
+                result = new BT::MK_STIG::HitBarrel(m_AI);
+            }else if(std::strcmp(xmlNode.attribute("action").value(),"MK_STIG_GoForDD") == 0){
+                result = new BT::MK_STIG::GoForDD(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_MakeHell") == 0)
+            {
+                result = new MW_XARDAS::MakeHell(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_AnimFireballDodge") == 0)
+            {
+                result = new MW_XARDAS::AnimFireballDodge(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_AnimFireballStepBack") == 0)
+            {
+                result = new MW_XARDAS::AnimFireballStepBack(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_StepBack") == 0)
+            {
+                result = new MW_XARDAS::StepBack(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_SmartAvgShot") == 0)
+            {
+                result = new MW_XARDAS::SmartAvgShot(m_AI);
+            }
+            else if (std::strcmp(xmlNode.attribute("action").value(), "MW_Xardas_Dodge") == 0)
+            {
+                result = new MW_XARDAS::Dodge(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if(std::strcmp(xmlNode.attribute("action").value(),"SM_SzatanskaMiotla_RecoveryState") == 0){
+                result = new BT::SM::SM_SzatanskaMiotla_RecoveryState(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"SM_SzatanskaMiotla_Patrol") == 0){
+                result = new BT::SM::SM_SzatanskaMiotla_Patrol(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else if(std::strcmp(xmlNode.attribute("action").value(),"TakeMedicine") == 0){
+                result = new BT::HAN::TakeMedicine(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"GoToPowerPoll") == 0){
+                result = new BT::HAN::GoToPowerPoll(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"TakeBuff") == 0){
+                result = new BT::HAN::TakeBuff(m_AI);
+            } else if(std::strcmp(xmlNode.attribute("action").value(),"KeepDistanceWithFireball") == 0){
+                result = new BT::HAN::KeepDistanceWithFireball(m_AI);
+            }
+            //////////////////////////////////////////////////////////////////////////
+            else {
                 throw "XMLError";
             }
             result->setType(BH_Action);

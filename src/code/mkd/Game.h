@@ -56,6 +56,7 @@ private:
     mkString m_levelName;
     bool m_startWithFreelook;
     bool m_disableShadows;
+    bool m_autoTarget;
 
 private:
     Ogre::SceneManager* m_ogreSceneMgr;
@@ -85,6 +86,11 @@ private:
     rtti::PresetMgr* m_presetMgr;
 
     Level* m_level;
+
+    PointCameraTarget* m_pointCamera;
+    float* m_score;
+    float* m_health;
+    bool m_win;
 };
 
 extern Game* g_game;

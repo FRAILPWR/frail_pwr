@@ -1224,16 +1224,18 @@ void Character::hitMelee()
 
 void Character::hitFireball( const mkVec3& targetPos )
 {
-    m_targetPos = targetPos;
-    Rocket* rocket = getLevel()->createObject<Rocket>(true, "Default");        
+    if(targetPos.distance(this->getSimPos()) <= this->getShootingRange()){
+        m_targetPos = targetPos;
+        Rocket* rocket = getLevel()->createObject<Rocket>(true, "Default");        
 
-    rocket->setDirection(getDirForRangedAttack());
-    rocket->setWorldPosition(getPosForRangedAttackStart());
-    rocket->setIgnoredObject(this);
+        rocket->setDirection(getDirForRangedAttack());
+        rocket->setWorldPosition(getPosForRangedAttackStart());
+        rocket->setIgnoredObject(this);
 
-    m_rangedProjectileLaunched = true;
+        m_rangedProjectileLaunched = true;
 
-    m_targetPos = mkVec3::ZERO;
+        m_targetPos = mkVec3::ZERO;
+    }
 }
 
 void Character::hitAngerMode()

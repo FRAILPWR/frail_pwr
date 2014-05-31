@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<aliases>
+	<!--<alias>floatExample 1000.0</alias>-->
+	<!--<alias>boolExample true</alias>-->
+	<!--<alias>sampleRange rngMelee</alias>-->
+	<alias>FBRange 10.0</alias>
+	<alias>FireballCone 50.0</alias>
+</aliases>
+<node type="Selector">
+	<node type="PrioritySelector">
+		<node type="Action" action="TakeMedicine" usefulness="3.5" duration="2000" interruptible="0">
+				<pre>LessEqual ActorHealth HealthWoundLimit</pre>
+				<pre>Equal IsMedOn True</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+		</node>
+		<node type="Action" action="GoToPowerPoll" usefulness="3.5" duration="2000" interruptible="0">
+					<pre>LessEqual ActorHealth HealthWoundLimit</pre>
+					<pre>Equal IsMedOn False</pre>
+					<pre>Equal IsInPoll False</pre>
+					<pre>Equal IsEnemyVisible False</pre>
+		</node>
+		<node type="Action" action="TakeBuff" usefulness="3.0" duration="2000" interruptible="1">
+				<pre>Equal IsBuffOn True</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+		</node>					
+		<node type="Action" action="ExploreSpot" usefulness="3.0" duration="0" interruptible="1">
+				<pre>Equal IsEnemySeen True</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+				<pre>Equal IsEnemyAttack False</pre>
+				<int>Equal IsEnemyAttack True</int>
+				<int>Equal IsEnemyVisible True</int>
+		</node>
+		<node type="Action" action="RevealAttacker" usefulness="2.0" duration="2000" interruptible="1">
+				<pre>Equal IsEnemyAttack True</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+		</node>
+		<node type="Action" action="Patrol" usefulness="1.0" duration="3000" interruptible="1">
+				<pre>Equal IsEnemyAttack False</pre>
+				<pre>Equal IsEnemyVisible False</pre>
+		</node>
+	</node>
+
+	<node type="Sequence">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+		</node>
+		<node type="PrioritySelector">
+			<node type="Action" action="KeepDistance" usefulness="3.5" duration="2000" interruptible="0">
+				<pre>Equal EnemyHasBuff True</pre>
+			</node>
+			<node type="Action" action="TakeMedicine" usefulness="3.5" duration="2000" interruptible="0">
+					<pre>LessEqual ActorHealth HealthWoundLimit</pre>
+					<pre>Equal IsMedOn True</pre>
+			</node>
+			<node type="Action" action="GoToPowerPoll" usefulness="3.5" duration="2000" interruptible="0">
+					<pre>LessEqual ActorHealth HealthWoundLimit</pre>
+					<pre>Equal IsMedOn False</pre>
+					<pre>Equal IsInPoll False</pre>
+			</node>
+			<node type="Sequence" usefulness="3.0">
+				<node type="Condition">
+					<pre>Equal IsEnemyRunningAway False</pre>
+					<pre>MoreEqual EnemyDistance rngMelee</pre>
+					<pre>LessEqual EnemyDistance rngFbMax</pre>
+				</node>
+				<node type="Action" action="KeepDistanceWithFireball" duration="1800" interruptible="1">
+				<int>LessEqual EnemyDistance rngMelee</int>
+				</node>
+			</node>
+			<node type="Sequence" usefulness="2.0">
+				<node type="Condition">
+					<pre>Equal IsEnemyRunningAway True</pre>
+					<pre>MoreEqual EnemyDistance FBRange</pre>
+					<pre>LessEqual EnemyDistance rngFbMax</pre>
+				</node>
+				<node type="Action" action="AnimAttackPunch" duration="600" interruptible="0" />
+				<node type="Action" action="AttackFireball" duration="50" interruptible="0" />
+			</node>
+			<node type="Sequence" usefulness="2.0">
+				<node type="Condition">
+					<pre>LessEqual EnemyDistance rngMelee</pre>
+					<pre>LessEqual EnemyDgrDiff dmgConeSize</pre>
+				</node>
+				<node type="Action" action="AnimAttackMelee" duration="1200" interruptible="1" >
+					<int>More EnemyDgrDiff dmgConeSize</int>
+				</node>
+				<node type="Action" action="AttackMelee" duration="50" interruptible="0" />
+			</node>
+			<node type="Action" action="TakeBuff" usefulness="1.5" duration="1000" interruptible="1">
+					<pre>Equal IsEnemyAttack False</pre>
+					<pre>Equal IsBuffOn True</pre>
+			</node>		
+			<node type="Action" action="Rotate" usefulness="1.5" duration="600" interruptible="0">
+				<pre>LessEqual EnemyDistance rngMelee</pre>
+				<pre>More EnemyDgrDiff dmgConeSize</pre>
+			</node>
+			<node type="Action" action="ReduceDistance" usefulness="1.0" duration="250" interruptible="1">
+				<pre>MoreEqual EnemyDistance rngMelee</pre>
+			</node>
+			<node type="Action" action="KeepDistance" usefulness="0.5" duration="2000" interruptible="0">
+				<pre>More EnemyDistance rngMelee</pre>
+				<pre>Less EnemyDistance FBRange</pre>
+			</node>
+		</node>
+	</node>
+</node>

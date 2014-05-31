@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<aliases>
+	<!--<alias>floatExample 1000.0</alias>-->
+	<!--<alias>boolExample true</alias>-->
+	<alias>IsEnemyInBarrelsRange False</alias>
+	<alias>IsEnemyGoingForward False</alias>
+	<alias>EnemySpeed 0.0</alias>
+</aliases>
+<node type = "Selector">
+	<node type="Action" action="MC_SIRO_WaitForEnemy" duration="500" interruptible="1" >
+		<pre>Equal IsEnemyGoingForward True</pre>
+		<pre>Equal FindEnemy False</pre>
+		<int>Equal IsEnemyInBarrelsRange True</int>	
+		<int>Equal FindEnemy True</int>
+		<int>LessEqual EnemyDistance rngFbMax</int>
+		<int>Equal IsEnemyGoingForward False</int>
+	</node>
+	
+	<node type="Sequence" usefulness="1.0">
+		<node type="Condition">			
+			<pre>Equal BarrelsInRange True</pre>
+			<pre>Equal FindEnemy True</pre>
+			<pre>More EnemyDistance rngFbMax</pre>
+		</node>
+		<node type="Action" action="MC_SIRO_AnimAttackRange" duration="550" interruptible="0" />
+		<node type="Action" action="MC_SIRO_ShootBarrel" duration="50" interruptible="0" >
+		</node>
+	</node>
+	
+	<node type="Action" action="MC_SIRO_GoToHealingField" duration="500" interruptible="1" >
+		<pre>Equal IsSpotReached False</pre>
+		<pre>Equal IsEnemyGoingForward False</pre>
+		<pre>Equal FindEnemy False</pre>
+		<int>Equal IsEnemyGoingForward True</int>
+		<int>Equal IsSpotReached True</int>
+	</node>
+			
+	<node type="Action" action="MC_SIRO_FindEnemy" duration="500" interruptible="1" >
+		<pre>Equal FindEnemy True</pre>
+		<pre>MoreEqual EnemyDistance rngFbMax</pre>
+		<int>LessEqual EnemyDistance rngFbMax</int>
+		<int>Equal IsEnemyInBarrelsRange True</int>	
+		<int>Equal BarrelsInRange True</int>
+	</node>
+	
+	<node type="Action" action="MC_SIRO_LookForEnemy" duration="500" interruptible="1" >
+		<pre>Equal IsEnemyVisible False</pre>
+		<pre>Equal IsSpotReached True</pre>
+		<int>Equal IsEnemyVisible True</int>	
+	</node>	
+	
+	<node type="Sequence" usefulness="1.0">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>Equal IsEnemyInBarrelsRange True</pre>
+			<pre>Equal BarrelsInRange True</pre>
+		</node>
+		<node type="Action" action="MC_SIRO_AnimAttackRange" duration="550" interruptible="0" />
+		<node type="Action" action="MC_SIRO_ShootBarrel" duration="50" interruptible="0" >
+		</node>
+	</node>
+	
+	<node type="Action" action="MC_SIRO_Rotate" duration="650" interruptible="0">
+		<pre>Equal IsEnemyVisible True</pre>
+		<pre>More EnemyDgrDiff dmgConeSize</pre>		
+	</node>
+	
+	<node type="Sequence" usefulness="1.0">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>Less EnemyDistance rngMelee</pre>
+		</node>
+		<node type="Action" action="MC_SIRO_AnimAttackMelee" duration="1150" interruptible="0" />
+		<node type="Action" action="MC_SIRO_AttackMelee" duration="50" interruptible="0" />
+	</node>
+	
+	<node type="Sequence" usefulness="1.0">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+			<pre>MoreEqual EnemyDistance rngMelee</pre>
+			<pre>LessEqual EnemyDistance rngFbMax</pre>
+		</node>
+		<node type="Action" action="MC_SIRO_AnimAttackRange" duration="550" interruptible="0" />
+		<node type="Action" action="MC_SIRO_AttackFireball" duration="50" interruptible="0" />
+	</node>
+</node>

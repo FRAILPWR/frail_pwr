@@ -25,6 +25,17 @@
 #include "Experiment1HTNActorController.h"
 #include "Experiment3HTNActorController.h"
 #include "Experiment3BTActorController.h"
+//Tournament////////////////////////////////////////////////////////////////
+#include "BlueBTActorController.h"
+#include "GorskiBTActorController.h"
+#include "HanActorController.h"
+#include "MK_STIG_ActorController.h"
+#include "MW_Xardas_MatBTActorController.h"
+#include "MyBestHTNActorController.h"
+#include "MyBTActorController.h"
+#include "SerpentFSMActorController.h"
+#include "SiroBTActorController.h"
+#include "SM_SzatanskaMiotla_BTActorController.h"
 
 // TODO: remove this factory, make actor controllers ordinary GameObjects and use RTTI for instantiating controllers dynamically with their class name
 
@@ -52,6 +63,17 @@ IActorController* ActorControllerFactory::create( const mkString& controller_id,
     CREATE_CONTROLLER(Experiment3BT);
     CREATE_CONTROLLER(SampleFSM);
     CREATE_CONTROLLER(BossFSM);
+    //////////////////////////////////////////////////////////////////////////
+    CREATE_CONTROLLER(BlueBT);
+    CREATE_CONTROLLER(GorskiBT);
+    CREATE_CONTROLLER(Han);
+    CREATE_CONTROLLER(MK_STIG_);
+    CREATE_CONTROLLER(MW_Xardas);
+    CREATE_CONTROLLER(MyBestHTN);
+    CREATE_CONTROLLER(MyBT);
+    CREATE_CONTROLLER(SerpentFSM);
+    CREATE_CONTROLLER(SiroBT);
+    CREATE_CONTROLLER(SM_SzatanskaMiotla_BT);
 
     MK_ASSERT_MSG(false, "Unrecognized actor controller '%s'", controller_id.c_str());
     return NULL;

@@ -31,6 +31,52 @@ public:
     virtual void setTarget(ICameraTarget* target) = 0;
 };
 
+class PointCameraTarget : public ICameraTarget
+{
+public:
+    explicit PointCameraTarget(mkVec3 position);
+
+    virtual mkVec3 CameraTarget_getWorldPosition() const;
+
+    void setPoint(mkVec3 val) { m_point = val; }
+private:
+    mkVec3 m_point;
+};
+
+class PointCamera : public ICamera
+{
+public:
+    PointCamera(Ogre::Camera* cam, ICameraTarget* target);
+
+    void update(float dt, float mouse_dx, float mouse_dy);
+    void move(const mkVec3& translation);
+
+    const mkVec3 getForwardVec() const;
+    const mkVec3 getRightVec() const;
+
+    const mkVec3 getPosition() const;
+
+    const mkVec3 getLookatPos() const;
+
+    void setLookAt(mkVec3 lookAt);
+
+    virtual void setTarget(ICameraTarget* target);
+
+private:
+    const mkVec3 m_forwardUnit;
+    const mkVec3 m_upUnit;
+    Ogre::Camera* m_cam;
+    ICameraTarget* m_target;
+    mkVec3 m_lookAt;
+
+    mkVec3 m_lastPos;
+    mkVec3 m_pos;
+    float m_yaw;
+    float m_roll;
+
+    mkVec3 m_forward;
+};
+
 class CameraFPP : public ICamera
 {
 public:

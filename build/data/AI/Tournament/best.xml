@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<aliases>
+	<alias>FollowRange 10.0</alias>
+</aliases>
+
+<node type="Selector">	
+
+	<node type="Sequence">
+		<node type="Condition">
+			<pre>Equal HasActorLowHealth True</pre>
+			<pre>Equal IsActorInPowerLake False</pre>
+		</node>
+		<node type="Action" action="AK_BEST_GoInPowerLakeDir" duration="100" interruptible="1" />
+	</node>
+	
+	<node type="Sequence">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible False</pre>
+		</node>
+		<node type="Selector">		
+			<node type="Action" action="AK_BEST_Idle" duration="1000" interruptible="1">
+				<pre>Equal IsEnemyVisible False</pre>
+				<pre>Equal IsEnemySeen False</pre>
+				<pre>Equal IsEnemyAttack False</pre>
+			</node>
+			<node type="Action" action="AK_BEST_FollowEnemysLastPos" duration="0" interruptible="1">
+				<pre>Equal IsEnemyVisible False</pre>
+				<pre>Equal IsEnemySeen True</pre>
+				<pre>Equal IsEnemyAttack False</pre>
+			</node>
+			<node type="Action" action="AK_BEST_InEnemysAttackDir" duration="2000" interruptible="1">
+				<pre>Equal IsEnemyVisible False</pre>
+				<pre>Equal IsEnemyAttack True</pre>
+			</node>
+		</node>
+	</node>
+	
+	<node type="Selector">	
+	
+		<node type="Sequence">
+			<node type="Condition">
+				<pre>LessEqual EnemyDistance rngMelee</pre>
+				<pre>LessEqual EnemyDgrDiff dmgConeSize</pre>
+			</node>
+			<node type="Action" action="AnimAttackMelee" duration="650" interruptible="1">
+				<int>More EnemyDgrDiff dmgConeSize</int>
+			</node>
+			<node type="Action" action="AK_BEST_MeleeAttack" duration="1200" interruptible="0" />
+		</node>
+		
+		<node type="Action" action="AK_BEST_Turn" duration="400" interruptible="0">
+				<pre>LessEqual EnemyDistance rngMelee</pre>
+				<pre>More EnemyDgrDiff dmgConeSize</pre>
+		</node>
+		
+		<node type="Action" action="AK_BEST_FollowEnemy" usefulness="1.0" duration="100" interruptible="1">
+				<pre>LessEqual EnemyDistance FollowRange</pre>
+		</node>
+		
+		<node type="Sequence">
+			<node type="Condition">
+				<pre>LessEqual EnemyDistance rngFbMax</pre>
+			</node>
+			<node type="Action" action="AnimAttackPunch" duration="550" interruptible="1">
+				<int>More EnemyDistance rngFbMax</int>
+			</node>
+			<node type="Action" action="AK_BEST_FireballAttack" duration="600" interruptible="0" />
+		</node>
+		
+		<node type="Action" action="AK_BEST_FollowEnemy" usefulness="1.0" duration="100" interruptible="1">
+				<pre>More EnemyDistance rngFbMax</pre>
+		</node>
+		
+	</node>
+	
+</node>
+ 

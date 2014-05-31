@@ -1,7 +1,7 @@
 /***********************************
- * mkdemo 2011-2013                *
- * author: Maciej Kurowski 'kurak' *
- ***********************************/
+* mkdemo 2011-2013                *
+* author: Maciej Kurowski 'kurak' *
+***********************************/
 #include "pch.h"
 #include "Game.h"
 #include "Player.h"
@@ -31,12 +31,23 @@ Game::Game()
     , m_slomo(1.f)
     , m_actorControllerFactory(NULL)
     , m_disableShadows(false)
+    , m_autoTarget(true)
+    , m_win(false)
 {
+    m_pointCamera = new PointCameraTarget(mkVec3::ZERO);
+    m_score = new float[2];
+    m_score[0] = 0.f;
+    m_score[1] = 0.f;
+
+    m_health = new float[2];
+    m_health[0] = 200.f;
+    m_health[1] = 200.f;
 }
 
 Game::~Game()
 {
-
+    delete m_pointCamera;
+    delete[] m_score;
 }
 
 bool Game::init(const mkString& cmd_line)
@@ -88,10 +99,44 @@ void Game::updateVisuals(float dt)
     if (m_level)
         m_level->updateRendering(dt);
 
+    if(!m_win){
+        TGameObjectVec AIcharacters;
+        getCurrentLevel()->findObjectsOfType(AIcharacters, &ActorAI::Type);
+        ActorAI* AIred = dynamic_cast<ActorAI*>(AIcharacters[0]);
+        ActorAI* AIblue = dynamic_cast<ActorAI*>(AIcharacters[1]);
+        if(AIred->getHealth() <= 0.f){
+            m_score[1] += 1000.f;
+            m_win = true;
+        }
+        if(AIblue->getHealth() <= 0.f){
+            m_score[0] += 1000.f;
+            m_win = true;
+        }
+        if (NULL != AIred)
+        {
+            float hpDiff = m_health[0]-AIred->getHealth();
+            if(hpDiff > 0.f){
+                m_score[1] += hpDiff;
+                m_score[0] -= hpDiff;
+            }
+            m_health[0] = AIred->getHealth();
+        }
+        if (NULL != AIblue)
+        {
+            float hpDiff = m_health[1]-AIblue->getHealth();
+            if(hpDiff > 0.f){
+                m_score[0] += hpDiff;
+                m_score[1] -= hpDiff;
+            }
+            m_health[1] = AIblue->getHealth();
+        }
+    }
+
     const mkVec3 fvec = m_playerCam->getForwardVec();
 
     // update hud
-    Ogre::OverlayManager::getSingleton().getOverlayElement("Core/CurrFps")->setCaption("FPS: " + Ogre::StringConverter::toString(m_renderWindow->getLastFPS()));
+    Ogre::OverlayManager::getSingleton().getOverlayElement("Core/CurrFps")->setCaption(Ogre::StringConverter::toString(m_score[0]));
+    Ogre::OverlayManager::getSingleton().getOverlayElement("Game/GunOrientation")->setCaption(Ogre::StringConverter::toString(m_score[1]));
     const int minutes = (int)m_logicTime / 60;
     const int seconds = (int)m_logicTime % 60;
     Ogre::OverlayManager::getSingleton().getOverlayElement("Game/Health")->setCaption("Time: " + Ogre::StringConverter::toString(minutes, 2, '0') + ":" + Ogre::StringConverter::toString(seconds, 2, '0'));
@@ -211,7 +256,11 @@ void Game::initRendering()
         m_ogreSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
     m_ogreCamera->setNearClipDistance(0.1f);
 
-    if (!m_startWithFreelook)
+    mkVec3 cameraStartingPos = mkVec3(-13.f,13.f,0.f);
+    m_pointCamera->setPoint(cameraStartingPos);
+    if (m_autoTarget)
+        m_playerCam = new PointCamera(m_ogreCamera, m_pointCamera);
+    else if (!m_startWithFreelook)
         m_playerCam = new CameraTPP(m_ogreCamera, NULL);
     else
         m_playerCam = new CameraFPP(m_ogreCamera, NULL);
@@ -289,7 +338,33 @@ void Game::updatePhysics(float dt)
 
     m_physicsWorld->stepSimulation(dt, 30);
 
-    if (!m_freelook && m_level)
+    mkVec3 targetPos = mkVec3::ZERO;
+    if(m_autoTarget){
+        TGameObjectVec AIcharacters;
+        getCurrentLevel()->findObjectsOfType(AIcharacters, &ActorAI::Type);
+
+        for(size_t i=0; i<AIcharacters.size(); ++i){
+            ModelObject* AI = dynamic_cast<ModelObject*>(AIcharacters[i]);
+            if (NULL != AI)
+            {
+                targetPos.x += AI->getWorldPosition().x;
+                targetPos.y += AI->getWorldPosition().y;
+                targetPos.z += AI->getWorldPosition().z;
+            }
+        }
+        targetPos = targetPos / AIcharacters.size();
+        targetPos.y += 1.f;
+    }
+
+    if(m_autoTarget){
+        m_playerCam->setTarget(NULL);
+        PointCamera *pointCam = dynamic_cast<PointCamera *>(m_playerCam);
+        if (NULL != pointCam)
+        {
+            pointCam->setLookAt(targetPos);
+        }
+    }
+    else if (!m_freelook && m_level)
         m_playerCam->setTarget(m_level->getPlayer());
     else
         m_playerCam->setTarget(NULL);
@@ -297,12 +372,12 @@ void Game::updatePhysics(float dt)
 
 void Game::movePlayer( float forward, float right, float dt )
 {
-    static float s_FreeCamSpeed = 12.f;
+    static float s_FreeCamSpeed = 4.f;
     const mkVec3 forward_vec = m_playerCam->getForwardVec() * forward ;
     const mkVec3 right_vec = m_playerCam->getRightVec() * right;
     mkVec3 move_dir = (forward_vec + right_vec).normalisedCopy();
-    
-    if (!m_freelook && m_level)
+
+    if (/*!m_freelook && m_level || */!m_autoTarget)
     {
         Player* player = m_level->getPlayer();
         player->addDirection(move_dir);
@@ -372,7 +447,7 @@ void Game::updateInput( float dt )
         else if (!s_ForceLowFramerate && isKeyDown(OIS::KC_LCONTROL))
             s_ForceLowFramerate = true;
     }
-    
+
     if (isKeyDown(OIS::KC_F9))
         m_pauseUpdates = true;
     else if (isKeyDown(OIS::KC_F10))
@@ -521,6 +596,8 @@ void Game::parseCmdLine(const mkString& cmd_line)
             m_levelName = *next_token_ptr;
             ++i;
         }
+        else if (token == "-autotarget")
+            m_autoTarget = true;
         else
         {
             Ogre::StringStream ss;

@@ -1,1 +1,1 @@
--freelook-level level_name-disable_shadows
+-freelook-level level_name-disable_shadows-autotarget

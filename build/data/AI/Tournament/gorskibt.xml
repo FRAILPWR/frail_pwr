@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<aliases>
+  <alias>BarrelRange 8.0</alias>
+  <alias>LowHealth 50.0</alias>
+</aliases>
+<node type="Selector">
+  <!--actions to take when you see the enemy-->
+  <node type="Sequence">
+    <node type="Condition">
+      <pre>Equal IsEnemyVisible True</pre>
+    </node>
+    <node type="Selector">
+      <!-- destroy barrels, when the enemy is near a barrel -->
+      <node type="Sequence">
+        <node type="Condition">
+          <pre>LessEqual BarrelTimer Zero</pre>
+          <pre>Equal IsBarrelAvailable True</pre>
+          <pre>LessEqual EnemyDistanceToBarrels BarrelRange</pre>
+          <pre>More DistanceToBarrels BarrelRange</pre>
+          <pre>LessEqual DistanceToBarrels ShootingRange</pre>
+        </node>
+        <node type="Action" action="AnimAttackPunch" duration="550" interruptible="0" />
+        <node type="Action" action="GG_GorskiBT_DestroyBarrels" duration="50" interruptible="0">
+          <pre>LessEqual BarrelTimer Zero</pre>
+          <pre>Equal IsBarrelAvailable True</pre>
+        </node>
+      </node>
+      <!-- if it's safe, run for the damage buff -->
+      <node type="Sequence">
+        <node type="Condition">
+          <pre>Equal IsBuffAvailable True</pre>
+          <pre>Less DistanceToBuff EnemyDistanceToBuff</pre>
+        </node>
+        <!--if there are barrels, destroy them-->
+        <node type="Selector">
+          <node type="Sequence">
+            <node type="Condition">
+              <pre>LessEqual BarrelTimer Zero</pre>
+              <pre>Equal IsBarrelAvailable True</pre>
+              <pre>More DistanceToBarrels BarrelRange</pre>
+              <pre>LessEqual DistanceToBarrels ShootingRange</pre>
+            </node>
+            <node type="Action" action="AnimAttackPunch" duration="550" interruptible="0" />
+            <node type="Action" action="GG_GorskiBT_DestroyBarrels" duration="50" interruptible="0">
+              <pre>LessEqual BarrelTimer Zero</pre>
+              <pre>Equal IsBarrelAvailable True</pre>
+            </node>
+            <node type="Action" action="GG_GorskiBT_PickupBuff" duration="1000" interruptible="1" />
+          </node>
+          <node type="Action" action="GG_GorskiBT_PickupBuff" duration="1000" interruptible="1" />
+        </node>
+      </node>
+      <!--if the enemy is in melee range, rotate or attack-->
+      <node type="Sequence">
+        <node type="Condition">
+          <pre>LessEqual DistanceToEnemy MeleeRange</pre>
+        </node>
+        <node type="Selector">
+          <node type="Sequence">
+            <node type="Condition">
+              <pre>More AngleDifference MeleeConeSize</pre>
+            </node>
+            <node type="Action" action="Rotate" duration="500" interruptible="0" />
+          </node>
+          <node type="Sequence">
+            <node type="Action" action="AnimAttackMelee" duration="1150" interruptible="1" >
+              <int>More AngleDifference MeleeConeSize</int>
+            </node>
+            <node type="Action" action="AttackMelee" duration="50" interruptible="0" />
+          </node>
+        </node>
+      </node>
+      <!--if the enemy is in shooting range, shoot-->
+      <node type="Sequence">
+        <node type="Condition">
+          <pre>LessEqual DistanceToEnemy ShootingRange</pre>
+        </node>
+        <node type="Action" action="AnimAttackPunch" duration="550" interruptible="0" />
+        <node type="Action" action="AttackFireball" duration="50" interruptible="0">
+          <pre>Equal IsEnemyVisible True</pre>
+          <pre>LessEqual DistanceToEnemy ShootingRange</pre>
+        </node>
+      </node>
+      <!--approach the enemy if out of range-->
+      <node type="Action" action="ReduceDistance" duration="1000" interruptible="1">
+        <int>LessEqual DistanceToEnemy ShootingRange</int>
+      </node>
+    </node>
+  </node>
+  <!--actions to take when you don't see the enemy-->
+  <node type="Selector">
+    <!--heal, if health is low-->
+    <node type="Sequence">
+      <node type="Condition">
+        <pre>LessEqual HealthPercentage LowHealth</pre>
+      </node>
+      <node type="Action" action="GG_GorskiBT_Heal" duration="1000" interruptible="0" />
+    </node>
+    <!--patrol until the enemy is spotted-->
+    <node type="Action" action="Patrol" duration="1000" interruptible="1">
+      <int>Equal IsEnemyVisible True</int>
+    </node>
+  </node>
+</node>

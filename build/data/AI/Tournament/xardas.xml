@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<aliases>
+	<!--<alias>floatExample 1000.0</alias>-->
+	<!--<alias>boolExample true</alias>-->
+	<!--<alias>sampleRange rngMelee</alias>-->
+	<alias>FBRange 10.0</alias>
+	<alias>FireballCone 50.0</alias>
+</aliases>
+<node type="Selector">
+<!--
+	<node type="Sequence">
+		<node type="Condition">
+			<pre>Equal ProbabDmg True</pre>
+			<pre>MoreEqual EnemyDistance FBRange</pre>
+			<pre>LessEqual EnemyDistance rngFbMax</pre>
+			<pre>LessEqual EnemyDgrDiff FireballCone</pre>
+		</node>
+		<node type="Action" action="Dodge" duration="200" interruptible="0" />
+		<node type="Action" action="AnimAttackPunch" duration="500" interruptible="0" />
+		<node type="Action" action="SmartShot" duration="50" interruptible="0" />
+	</node>
+	<node type="Action" action="Dodge" usefulness="9000.0" duration="2" interruptible="1">
+			<pre>Equal ProbabDmg True</pre>
+	</node>
+
+	<node type="Action" action="StepBack" usefulness="9000.0" duration="500" interruptible="0">
+		<pre>Equal ProbabDmg False</pre>
+		<pre>Equal ProbabFutureDmg True</pre>
+	</node>
+-->
+	<node type="PrioritySelector">
+		<node type="Action" action="ExploreSpot" usefulness="3.0" duration="500" interruptible="1">
+			<pre>Equal IsEnemyVisible False</pre>
+			<pre>Equal IsEnemySeen True</pre>
+			<pre>Equal IsEnemyAttack False</pre>
+		</node>
+		<node type="Action" action="RevealAttacker" usefulness="2.0" duration="2000" interruptible="1">
+			<pre>Equal IsEnemyAttack True</pre>
+			<pre>Equal IsEnemyVisible False</pre>
+		</node>
+		<node type="Action" action="Patrol" usefulness="1.0" duration="3000" interruptible="1">
+			<pre>Equal IsEnemyAttack False</pre>
+			<pre>Equal IsEnemyVisible False</pre>
+		</node>
+	</node>
+	<node type="Sequence">
+		<node type="Condition">
+			<pre>Equal IsEnemyVisible True</pre>
+		</node>
+		<node type="PrioritySelector">
+			<node type="Action" action="MW_Xardas_Dodge" duration="400" usefulness="8.1" interruptible="0" >
+				<pre>LessEqual EnemyDistance rngMelee</pre>
+				<pre>Equal IsWallBehind True</pre>
+			</node>
+			<node type="Sequence" usefulness="9.0">
+				<node type="Condition">
+					<pre>Equal EnemyCloseToBarrel True</pre>
+				</node>
+				<node type="Action" action="MW_Xardas_AnimFireballDodge" duration="550" interruptible="0" />
+				<node type="Action" action="MW_Xardas_MakeHell" duration="50" interruptible="0" />
+			</node>
+			<node type="Action" action="MW_Xardas_StepBack" duration="20" usefulness="7.0" interruptible="1" >
+				<pre>LessEqual EnemyDistance rngMelee</pre>
+				<pre>Equal IsWallBehind False</pre>
+			</node>
+			<node type="Action" action="Idle" duration="50" usefulness="6.0" interruptible="1" >
+				<pre>LessEqual EnemyDistance rngRingMinMelee</pre>
+				<pre>MoreEqual EnemyDistance rngMelee</pre>
+				<pre>Equal IsWallBehind False</pre>
+				<pre>Equal IsEnemyMoving True</pre>
+			</node>
+			<node type="Action" action="MW_Xardas_StepBack" duration="20" usefulness="5.0" interruptible="1" >
+				<pre>LessEqual EnemyDistance rngRingMinMelee</pre>
+				<pre>Equal IsWallBehind False</pre>
+			</node>
+			<node type="Sequence" usefulness="4.0">
+				<node type="Condition">
+					<pre>MoreEqual EnemyDistance FBRange</pre>
+					<pre>LessEqual EnemyDistance rngMinFbMax</pre>
+					<pre>LessEqual EnemyDgrDiff FireballCone</pre>
+					<pre>Equal IsWallBehind False</pre>
+				</node>
+				<node type="Action" action="MW_Xardas_AnimFireballStepBack" duration="550" interruptible="0" />
+				<node type="Action" action="MW_Xardas_SmartAvgShot" duration="50" interruptible="0" />
+			</node>
+			<node type="Sequence" usefulness="3.0">
+				<node type="Condition">
+					<pre>MoreEqual EnemyDistance FBRange</pre>
+					<pre>LessEqual EnemyDistance rngFbMax</pre>
+					<pre>LessEqual EnemyDgrDiff FireballCone</pre>
+				</node>
+				<node type="Action" action="MW_Xardas_AnimFireballDodge" duration="550" interruptible="0" />
+				<node type="Action" action="MW_Xardas_SmartAvgShot" duration="50" interruptible="0" />
+			</node>
+			<node type="Sequence" usefulness="2.0">
+				<node type="Condition">
+					<pre>LessEqual EnemyDistance rngRingMaxMelee</pre>
+					<pre>MoreEqual EnemyDistance rngRingMinMelee</pre>
+					<pre>LessEqual EnemyDgrDiff dmgConeSize</pre>
+				</node>
+				<node type="Action" action="AnimAttackMelee" duration="1150" interruptible="1" >
+					<int>More EnemyDgrDiff dmgConeSize</int>
+				</node>
+				<node type="Action" action="AttackMelee" duration="50" interruptible="0" />
+			</node>
+			<node type="Action" action="Rotate" usefulness="1.5" duration="100" interruptible="0">
+				<pre>More EnemyDgrDiff dmgConeSize</pre>
+			</node>
+			<node type="Action" action="ReduceDistance" usefulness="1.0" duration="250" interruptible="0">
+				<pre>MoreEqual EnemyDistance rngFbMax</pre>
+			</node>
+			<node type="Action" action="KeepDistance" usefulness="0.5" duration="200" interruptible="0">
+				<pre>More EnemyDistance rngMelee</pre>
+				<pre>Less EnemyDistance FBRange</pre>
+			</node>
+		</node>
+  </node>
+</node>

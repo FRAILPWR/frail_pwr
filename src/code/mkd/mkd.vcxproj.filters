@@ -64,6 +64,9 @@
     <Filter Include="Game\ActorControllers\ExperimentalControllers">
       <UniqueIdentifier>{e0d464c6-b5cf-4ad0-97c1-4540b4ca653b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\ActorControllers\Tournament">
+      <UniqueIdentifier>{1a985570-d5be-4ce6-a2e3-4e0205f0af25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="contrib\DebugDrawer.cpp">
@@ -272,6 +275,36 @@
     </ClCompile>
     <ClCompile Include="SampleFSMActorController.cpp">
       <Filter>Game\ActorControllers\FSMControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBestHTNActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueBTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="GorskiBTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="SiroBTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="SM_SzatanskaMiotla_BTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="MK_STIG_ActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="SerpentFSMActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="MW_Xardas_MatBTActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClCompile>
+    <ClCompile Include="HanActorController.cpp">
+      <Filter>Game\ActorControllers\Tournament</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -496,6 +529,39 @@
     </ClInclude>
     <ClInclude Include="SampleFSMActorController.h">
       <Filter>Game\ActorControllers\FSMControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="MatUtils.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBestHTNActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueBTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="GorskiBTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="SiroBTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="SM_SzatanskaMiotla_BTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="MK_STIG_ActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="SerpentFSMActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="MW_Xardas_MatBTActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="HanActorController.h">
+      <Filter>Game\ActorControllers\Tournament</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
