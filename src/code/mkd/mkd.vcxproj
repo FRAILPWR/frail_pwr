@@ -199,8 +199,11 @@
     </ClCompile>
     <ClCompile Include="CylinderVolumeTrigger.cpp" />
     <ClCompile Include="Experiment1BTActorController.cpp" />
+    <ClCompile Include="Experiment1FSMActorController.cpp" />
     <ClCompile Include="Experiment1HTNActorController.cpp" />
+    <ClCompile Include="Experiment2FSMActorController.cpp" />
     <ClCompile Include="Experiment3BTActorController.cpp" />
+    <ClCompile Include="Experiment3FSMActorController.cpp" />
     <ClCompile Include="Experiment3HTNActorController.cpp" />
     <ClCompile Include="HTNActorController.cpp" />
     <ClCompile Include="htn\Goal.cpp" />
@@ -282,8 +285,11 @@
     <ClInclude Include="contrib\DebugDrawer.h" />
     <ClInclude Include="CylinderVolumeTrigger.h" />
     <ClInclude Include="Experiment1BTActorController.h" />
+    <ClInclude Include="Experiment1FSMActorController.h" />
     <ClInclude Include="Experiment1HTNActorController.h" />
+    <ClInclude Include="Experiment2FSMActorController.h" />
     <ClInclude Include="Experiment3BTActorController.h" />
+    <ClInclude Include="Experiment3FSMActorController.h" />
     <ClInclude Include="Experiment3HTNActorController.h" />
     <ClInclude Include="Filesystem.h" />
     <ClInclude Include="FixedString.h" />

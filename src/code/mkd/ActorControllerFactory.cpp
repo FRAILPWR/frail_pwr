@@ -25,6 +25,10 @@
 #include "Experiment1HTNActorController.h"
 #include "Experiment3HTNActorController.h"
 #include "Experiment3BTActorController.h"
+#include "Experiment1FSMActorController.h"
+#include "Experiment2FSMActorController.h"
+#include "Experiment3FSMActorController.h"
+
 
 // TODO: remove this factory, make actor controllers ordinary GameObjects and use RTTI for instantiating controllers dynamically with their class name
 
@@ -48,8 +52,11 @@ IActorController* ActorControllerFactory::create( const mkString& controller_id,
     CREATE_CONTROLLER(SampleBT);
     CREATE_CONTROLLER(Experiment1HTN);
     CREATE_CONTROLLER(Experiment1BT);
+    CREATE_CONTROLLER(Experiment1FSM);
+    CREATE_CONTROLLER(Experiment2FSM);
     CREATE_CONTROLLER(Experiment3HTN);
     CREATE_CONTROLLER(Experiment3BT);
+    CREATE_CONTROLLER(Experiment3FSM);
     CREATE_CONTROLLER(SampleFSM);
     CREATE_CONTROLLER(BossFSM);
 

@@ -45,7 +45,7 @@ void StateMachineActorController::updateStateTransition()
 
 void StateMachineActorController::onTakeDamage(const SDamageInfo& dmg_info)
 {
-    m_currentState->onTakeDamage();
+    m_currentState->onTakeDamage(dmg_info);
 }
 
 void StateMachineActorController::onUpdate( float dt )

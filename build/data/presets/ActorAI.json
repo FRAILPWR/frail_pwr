@@ -174,7 +174,7 @@
         "PresetName" : "NinjaExperiment1",
         "Extends" : "AIBase",
         "m_prefabName" : "actor_ninja_enemy",
-        "m_characterCtrlName" : "Experiment1HTN"
+        "m_characterCtrlName" : "Experiment1FSM"
 		"m_conflictSide" : "Unknown",
         "m_maxSpeed" : "0.06",
         "m_canJump" : "true",
@@ -203,7 +203,7 @@
         "PresetName" : "NinjaExperiment2",
         "Extends" : "AIBase",
         "m_prefabName" : "actor_ninja_enemy",
-        "m_characterCtrlName" : "Experiment1HTN"
+        "m_characterCtrlName" : "Experiment2FSM"
 		"m_conflictSide" : "Unknown",
         "m_maxSpeed" : "0.06",
         "m_canJump" : "true",
@@ -232,7 +232,7 @@
         "PresetName" : "NinjaExperiment3",
         "Extends" : "AIBase",
         "m_prefabName" : "actor_ninja_enemy",
-        "m_characterCtrlName" : "Experiment3HTN"
+        "m_characterCtrlName" : "Experiment3FSM"
 		"m_conflictSide" : "BlueTeam",
         "m_maxSpeed" : "0.06",
         "m_canJump" : "true",
@@ -334,7 +334,7 @@
 		"Extends" : "BOSSCommon",
         "m_conflictSide" : "BlueTeam",
         "m_overrideMaterialName" : "NinjaRed"
-		"m_characterCtrlName" : "HTN",
+		"m_characterCtrlName" : "BossFSM",
 		"m_btTreePath": "data\\AI\\BT\\melee.xml",
 		"m_htnMethodsPath": "data\\AI\\HTN\\melee\\methods.xml",
 		"m_htnOperatorsPath": "data\\AI\\HTN\\melee\\operators.xml",

@@ -41,7 +41,7 @@ namespace sm
         virtual ~State() { }
 
         virtual void onUpdate(float dt) { }
-        virtual void onTakeDamage() { }
+        virtual void onTakeDamage(const SDamageInfo& dmg_info) { }
         virtual void onDebugDraw() { }
 
         virtual void onEnter(State* prev_state) { }

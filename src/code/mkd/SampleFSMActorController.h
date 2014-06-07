@@ -28,7 +28,7 @@ namespace sample_sm
         void onUpdate(float dt);
         void onEnter(State* prev_state);
 
-        virtual void onTakeDamage();
+        virtual void onTakeDamage(const SDamageInfo& dmg_info);
 
         virtual void onDebugDraw();
 

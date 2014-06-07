@@ -68,7 +68,7 @@ void sample_sm::IdleState::onEnter(State* prev_state)
     getAI()->setSpeed(0.f);
 }
 
-void sample_sm::IdleState::onTakeDamage()
+void sample_sm::IdleState::onTakeDamage(const SDamageInfo& dmg_info)
 {
     getAI()->jump();
 }

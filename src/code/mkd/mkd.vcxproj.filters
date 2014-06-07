@@ -273,6 +273,15 @@
     <ClCompile Include="SampleFSMActorController.cpp">
       <Filter>Game\ActorControllers\FSMControllers</Filter>
     </ClCompile>
+    <ClCompile Include="Experiment1FSMActorController.cpp">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Experiment3FSMActorController.cpp">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Experiment2FSMActorController.cpp">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="contrib\DebugDrawer.h">
@@ -496,6 +505,15 @@
     </ClInclude>
     <ClInclude Include="SampleFSMActorController.h">
       <Filter>Game\ActorControllers\FSMControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Experiment1FSMActorController.h">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Experiment3FSMActorController.h">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Experiment2FSMActorController.h">
+      <Filter>Game\ActorControllers\ExperimentalControllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
